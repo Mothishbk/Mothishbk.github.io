@@ -472,7 +472,7 @@ const SKILLS=[
  ['Observability & Reliability','eye',['Datadog','Prometheus','Grafana','Splunk','New Relic','CloudWatch','SLI / SLO','Incident Response (P1–P3)','RCA','Runbooks']],
  ['Security & DevSecOps','shield',['SAST / DAST','Trivy','Checkov','OWASP ZAP','Burp Suite','STRIDE','MITRE ATT&CK','Shift-Left / Secure SDLC','IAM Least-Privilege','ISO/IEC 27001']],
  ['Programming & Data','code',['Python (Flask, Pandas)','Bash / Shell','Java (Spring Boot)','Node.js','SQL / MySQL / Oracle','REST APIs','YAML','Kafka']],
- ['AI Security & Governance','cpu',['AI / MLOps Security','LLM Security','Federated Learning (concepts)','Differential Privacy','GDPR','DPDP Act awareness']]
+ ['AI Security & Governance','cpu',['AI / MLOps Security','LLM Security','Federated Learning (concepts)','Differential Privacy','GDPR']]
 ];
 document.getElementById('skillGrid').innerHTML=SKILLS.map(([t,i,p])=>
 `<div class="card sk rv"><div class="sk-h"><span class="sk-ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">${ICON[i]}</svg></span><h3>${t}</h3></div><div class="pills">${p.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div>`).join('');
@@ -489,7 +489,7 @@ const CERTS=[
  ['DevSecOps','TryHackMe','shield','p','Certified','',''],
  ['Datadog Fundamentals','Datadog','eye','p','Certified','',''],
  ['Agile Scrum Master','HRD University','flow','p','Certified','',''],
- ['DPDP Act','Data Protection · India','shield','a','In Progress','','']
+ ['(SC-200) Microsoft Security Operations Analyst Associate','Microsoft','shield','a','In Progress','','']
 ];
 const VIC='<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
 document.getElementById('certGrid').innerHTML=CERTS.map(([n,i,ic,c,s,img,url])=>{
