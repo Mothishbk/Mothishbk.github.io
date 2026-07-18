@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mothish Babu Kandaswamy — DevOps · DevSecOps · SRE</title>
+<meta name="description" content="DevOps, DevSecOps and SRE engineer. Kubernetes, Terraform, CI/CD and secure cloud delivery across AWS and Azure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1216; --surface:#161A21; --surface-2:#1C212A; --line:#262C36;
+  --blue:#2D9CFF; --blue-soft:#4DA3FF; --blue-dim:rgba(45,156,255,.12);
+  --text:#E8ECF1; --muted:#8A94A6; --amber:#FFB84D;
+  --mono:'JetBrains Mono',monospace; --sans:'Inter',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+::selection{background:var(--blue);color:#0F1216}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:110px 0;position:relative}
+h1,h2,h3,h4,.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block}
+h2.sec{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+.sec-sub{color:var(--muted);margin-bottom:52px;max-width:620px;font-size:.98rem}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,18,22,.82);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-bottom-color:var(--line)}
+.nav-in{max-width:1080px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:700;letter-spacing:.05em;text-decoration:none;color:var(--text)}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--blue),#1B6FCC);display:grid;place-items:center;font-size:.82rem;color:#080C11}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--blue);transition:width .3s}
+.nav-links a:hover{color:var(--text)} .nav-links a:hover::after{width:100%}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:80px}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000 20%,transparent 75%);opacity:.5;pointer-events:none}
+.hero h1{font-size:clamp(2.2rem,6.5vw,4.1rem);font-weight:700;letter-spacing:-.035em;line-height:1.05;margin-bottom:16px}
+.desig{font-family:var(--mono);font-size:clamp(.8rem,2vw,1rem);color:var(--blue);letter-spacing:.14em;margin-bottom:26px}
+.intro{max-width:660px;color:var(--muted);font-size:1.02rem;margin-bottom:34px}
+.intro strong{color:var(--text);font-weight:400}
+.ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:38px}
+.btn{font-family:var(--mono);font-size:.82rem;letter-spacing:.05em;padding:13px 26px;border-radius:8px;text-decoration:none;transition:.25s;display:inline-block;border:1px solid var(--line)}
+.btn-p{background:var(--blue);color:#080C11;border-color:var(--blue);font-weight:500}
+.btn-p:hover{background:var(--blue-soft);transform:translateY(-2px);box-shadow:0 8px 26px rgba(45,156,255,.32)}
+.btn-s{color:var(--text);background:transparent}
+.btn-s:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+.socials{display:flex;gap:12px}
+.soc{width:42px;height:42px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;color:var(--muted);transition:.25s;background:var(--surface)}
+.soc:hover{color:var(--blue);border-color:var(--blue);transform:translateY(-3px)}
+.soc svg{width:17px;height:17px}
+/* signature: status strip */
+.status{margin-top:54px;border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:14px 18px;display:flex;gap:26px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:.72rem;color:var(--muted);max-width:660px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--blue);display:inline-block;margin-right:8px;animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(45,156,255,.5)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(45,156,255,0)}}
+.status b{color:var(--text);font-weight:500}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;transition:.3s}
+.card:hover{border-color:rgba(45,156,255,.4);transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:780px){.two{grid-template-columns:1fr}}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:start}
+@media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+.mono-avatar{aspect-ratio:1;border-radius:18px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;position:relative;overflow:hidden}
+.mono-avatar::before{content:'';position:absolute;width:150%;height:150%;background:conic-gradient(from 0deg,transparent,var(--blue),transparent 40%);animation:spin 7s linear infinite;opacity:.28}
+.mono-avatar::after{content:'';position:absolute;inset:3px;border-radius:15px;background:var(--surface)}
+.mono-avatar span{position:relative;z-index:2;font-family:var(--mono);font-size:4rem;font-weight:700;background:linear-gradient(135deg,var(--blue),#7FC4FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* optional profile photo — drop-in replacement for the MB monogram */
+.mono-avatar img{position:relative;z-index:2;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:cover;border-radius:15px}
+.about-p{color:var(--muted);margin-bottom:28px}
+.mv{padding:22px}
+.mv h4{font-size:.74rem;letter-spacing:.18em;color:var(--blue);text-transform:uppercase;margin-bottom:10px}
+.mv p{font-size:.92rem;color:var(--muted)}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.jump a{font-family:var(--mono);font-size:.75rem;color:var(--muted);text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:7px;transition:.25s}
+.jump a:hover{color:var(--blue);border-color:var(--blue);transform:translateY(-2px)}
+
+/* EXPERIENCE */
+.exp{display:grid;grid-template-columns:190px 1fr;overflow:hidden}
+@media(max-width:780px){.exp{grid-template-columns:1fr}}
+.exp-side{background:var(--surface-2);padding:26px 22px;border-right:1px solid var(--line)}
+@media(max-width:780px){.exp-side{border-right:none;border-bottom:1px solid var(--line)}}
+.badge{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;padding:4px 10px;border-radius:5px;background:var(--blue-dim);color:var(--blue);border:1px solid rgba(45,156,255,.28);text-transform:uppercase}
+.exp-side .dur{font-family:var(--mono);font-size:.76rem;color:var(--text);margin:12px 0 4px}
+.exp-side .loc{font-size:.78rem;color:var(--muted)}
+.exp-main{padding:26px}
+.exp-main h3{font-size:1.12rem;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.exp-main .co{font-family:var(--mono);font-size:.84rem;color:var(--blue);margin-bottom:18px}
+.lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin:18px 0 10px}
+ul.clean{list-style:none;display:grid;gap:9px}
+ul.clean li{position:relative;padding-left:20px;font-size:.92rem;color:var(--muted)}
+ul.clean li::before{content:'';position:absolute;left:0;top:10px;width:7px;height:1px;background:var(--blue)}
+ul.win li::before{content:'▸';top:0;width:auto;height:auto;background:none;color:var(--blue);font-size:.8rem}
+ul.win li{color:var(--text);font-weight:400}
+ul.win b{color:var(--blue);font-weight:500}
+
+/* EDU */
+.edu{padding:26px}
+.edu h3{font-size:1.05rem;margin-bottom:6px}
+.edu .inst{font-family:var(--mono);font-size:.82rem;color:var(--blue);margin-bottom:4px}
+.edu .meta{font-size:.8rem;color:var(--muted);margin-bottom:16px}
+
+/* PROJECTS */
+.proj{display:grid;grid-template-columns:200px 1fr;overflow:hidden;margin-bottom:22px}
+@media(max-width:780px){.proj{grid-template-columns:1fr}}
+.proj-side{background:linear-gradient(160deg,var(--surface-2),#12161D);padding:26px 22px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+@media(max-width:780px){.proj-side{border-right:none;border-bottom:1px solid var(--line)}}
+.proj-side .n{font-family:var(--mono);font-size:2.4rem;font-weight:700;color:rgba(45,156,255,.28);line-height:1}
+.proj-side .t{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:16px}
+.proj-main{padding:26px}
+.proj-main h3{font-size:1.12rem;margin-bottom:10px;transition:letter-spacing .3s}
+.proj:hover .proj-main h3{letter-spacing:.01em;color:var(--blue)}
+.proj-main .desc{font-size:.93rem;color:var(--muted);margin-bottom:6px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+@media(max-width:560px){.out{grid-template-columns:1fr}}
+.out div{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-size:.85rem;color:var(--muted)}
+.out b{color:var(--blue);font-family:var(--mono);font-weight:500}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.pill{font-family:var(--mono);font-size:.7rem;padding:5px 11px;border-radius:20px;background:var(--blue-dim);color:var(--blue-soft);border:1px solid rgba(45,156,255,.2);transition:.25s}
+.pill:hover{background:rgba(45,156,255,.2);transform:translateY(-2px)}
+
+/* SKILLS */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.sk{padding:22px}
+.sk-h{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+.sk-ic{width:34px;height:34px;border-radius:8px;background:var(--blue-dim);display:grid;place-items:center;color:var(--blue);transition:transform .6s}
+.sk:hover .sk-ic{transform:rotate(360deg)}
+.sk-ic svg{width:16px;height:16px}
+.sk h3{font-size:.85rem;letter-spacing:.06em;font-weight:500}
+
+/* CERTS */
+.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.cert{padding:20px;display:flex;gap:14px;align-items:flex-start}
+.cert-ic{width:38px;height:38px;border-radius:9px;background:var(--blue-dim);display:grid;place-items:center;color:var(--blue);flex-shrink:0;transition:transform .3s}
+.cert:hover .cert-ic{transform:scale(1.08)}
+.cert h3{font-size:.88rem;font-weight:500;margin-bottom:4px;line-height:1.4}
+.cert .iss{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:3px 8px;border-radius:4px;margin-top:8px;text-transform:uppercase}
+.chip.p{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(45,156,255,.25)}
+.chip.a{background:rgba(255,184,77,.12);color:var(--amber);border:1px solid rgba(255,184,77,.3)}
+/* optional certificate image + verify link */
+.cert-img{width:100%;border-radius:9px;border:1px solid var(--line);margin-top:12px;display:block;transition:transform .4s}
+.cert:hover .cert-img{transform:scale(1.03)}
+.cert.has-img{flex-direction:column;gap:0}
+.verify{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--blue);text-decoration:none;margin-top:9px;padding:4px 9px;border:1px solid rgba(45,156,255,.3);border-radius:5px;transition:.2s}
+.verify:hover{background:var(--blue-dim);transform:translateX(3px)}
+.verify svg{width:11px;height:11px}
+
+/* STATS + ACHIEVEMENTS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px}
+@media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:22px;text-align:center}
+.stat .num{font-family:var(--mono);font-size:2.1rem;font-weight:700;color:var(--blue);line-height:1}
+.stat .lab{font-size:.74rem;color:var(--muted);margin-top:7px;letter-spacing:.04em}
+.ach{padding:26px;display:flex;gap:18px;align-items:flex-start}
+.ach-ic{width:52px;height:52px;border-radius:12px;background:linear-gradient(140deg,rgba(45,156,255,.22),rgba(45,156,255,.05));display:grid;place-items:center;color:var(--blue);flex-shrink:0;border:1px solid rgba(45,156,255,.22)}
+.ach-ic svg{width:24px;height:24px}
+.ach h3{font-size:1rem;margin:8px 0 3px}
+.ach .inst{font-family:var(--mono);font-size:.78rem;color:var(--blue);margin-bottom:9px}
+.ach p{font-size:.89rem;color:var(--muted)}
+/* optional achievement image */
+.ach.has-img{flex-direction:column;gap:0}
+.ach-img{width:100%;border-radius:10px;border:1px solid var(--line);margin-bottom:16px;display:block;transition:transform 6s ease-out}
+.ach:hover .ach-img{transform:scale(1.05)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:22px}
+@media(max-width:820px){.contact-grid{grid-template-columns:1fr}}
+.form{padding:28px}
+.fg{position:relative;margin-bottom:24px}
+.fg input,.fg textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);padding:10px 0;color:var(--text);font-family:var(--sans);font-size:.94rem;outline:none}
+.fg textarea{resize:vertical;min-height:96px}
+.fg label{position:absolute;left:0;top:10px;color:var(--muted);font-size:.92rem;pointer-events:none;transition:.25s}
+.fg input:focus~label,.fg input:valid~label,.fg textarea:focus~label,.fg textarea:valid~label{top:-13px;font-size:.7rem;color:var(--blue);font-family:var(--mono);letter-spacing:.08em}
+.fg .bar{position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--blue);transition:width .35s}
+.fg input:focus~.bar,.fg textarea:focus~.bar{width:100%}
+.send{position:relative;overflow:hidden;border:none;cursor:pointer;width:100%;font-family:var(--mono);font-size:.84rem;padding:14px;border-radius:8px;background:var(--blue);color:#080C11;font-weight:500;transition:.25s}
+.send:hover{background:var(--blue-soft);transform:translateY(-2px)}
+.send::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transition:left .6s}
+.send:hover::after{left:130%}
+.info{padding:28px;background:var(--surface-2)}
+.info-row{display:flex;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--text);transition:.25s}
+.info-row:last-child{border-bottom:none}
+.info-row:hover{transform:translateX(6px)}
+.info-row:hover .ir-ic{color:var(--blue)}
+.ir-ic{width:34px;height:34px;border-radius:8px;background:var(--surface);display:grid;place-items:center;color:var(--muted);flex-shrink:0;transition:.25s}
+.ir-ic svg{width:15px;height:15px}
+.ir-l{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.ir-v{font-size:.88rem;word-break:break-all}
+
+footer{border-top:1px solid var(--line);padding:36px 0;text-align:center}
+footer .fn{font-family:var(--mono);font-weight:700;margin-bottom:6px}
+footer .tag{color:var(--muted);font-size:.88rem;margin-bottom:18px}
+footer .socials{justify-content:center}
+.copy{color:var(--muted);font-size:.76rem;margin-top:20px;font-family:var(--mono)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv-l{opacity:0;transform:translateX(-32px);transition:.75s cubic-bezier(.2,.7,.3,1)}
+.rv-l.in{opacity:1;transform:none}
+.rv-r{opacity:0;transform:translateX(32px);transition:.75s cubic-bezier(.2,.7,.3,1)}
+.rv-r.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.rv-l,.rv-r{opacity:1!important;transform:none!important}}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<nav id="nav"><div class="nav-in">
+  <a href="#top" class="logo"><span class="logo-mark">MB</span> MOTHISH</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li><li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li><li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+</div></nav>
+
+<!-- HERO -->
+<section class="hero" id="top"><div class="grid-bg"></div><div class="wrap">
+  <h1 class="rv">Mothish Babu<br>Kandaswamy</h1>
+  <div class="desig rv">DevOps · DevSecOps · SRE</div>
+  <p class="intro rv">I build and operate cloud infrastructure that teams can rely on. Over <strong>3+ years</strong> I've run Kubernetes-based production platforms across AWS and Azure, engineered CI/CD pipelines that deploy safely, and automated the operational toil out of day-to-day engineering. What sets my work apart is a security lens applied from the start — SAST/IaC scanning gates, threat modelling and standards-aligned delivery — backed by an <strong>NCSC-certified MSc in Information Security</strong>. Today I'm focused on secure, observable platforms for a world where software ships faster than ever.</p>
+  <div class="ctas rv">
+    <a href="#about" class="btn btn-p">Learn more about me</a>
+    <a href="#contact" class="btn btn-s">Get in touch</a>
+  </div>
+  <div class="socials rv">
+    <a class="soc" href="https://github.com/mothishbk" target="_blank" rel="noopener" aria-label="GitHub"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+    <a class="soc" href="https://linkedin.com/in/mothish-babukandaswamy" target="_blank" rel="noopener" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a class="soc" href="mailto:mothishbk2000@gmail.com" aria-label="Email"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+  </div>
+  <div class="status rv"><span><span class="dot"></span>Chennai, India · <b>Open to relocation</b></span><span>uptime target <b>99.9%</b></span><span>MTTR <b>−60%</b></span><span>deploy success <b>99%+</b></span></div>
+</div></section>
+
+<!-- ABOUT -->
+<section id="about"><div class="wrap">
+  <span class="eyebrow rv">01 — About</span><h2 class="sec rv">Reliability, with security built in</h2>
+  <div class="about-grid">
+    <!-- PROFILE PHOTO: to use one, delete the <span> below and uncomment the <img> line.
+         Put the file in an "images" folder next to index.html. -->
+    <div class="mono-avatar rv-l"><span>MB</span>
+      <!-- <img src="images/profile.jpg" alt="Mothish Babu Kandaswamy"> --></div>
+    <div>
+      <p class="about-p rv">I'm a DevOps and DevSecOps engineer who enjoys the part of the job most people avoid — the pipelines, the alerts at 2am, and the quiet work that keeps production stable. At LTIMindtree I operated 10+ microservices on AWS EKS, provisioned infrastructure as code with Terraform and Ansible, and built CI/CD pipelines that held a 99%+ deployment success rate across two consecutive quarters. I work day-to-day with Kubernetes, Helm, Argo CD, GitHub Actions, Jenkins, Datadog, Prometheus and Grafana, and I automate anything that repeats. My MSc in Information Security at Royal Holloway shaped how I approach infrastructure: security isn't a review at the end, it's a property you build in. That combination — reliability engineering with genuine security depth, including AI and data-protection governance — is what I bring to a team.</p>
+      <div class="two">
+        <div class="card mv rv-r"><h4>Mission</h4><p>To make security a built-in property of delivery rather than a final checkpoint — embedding it into every pipeline, environment and release.</p></div>
+        <div class="card mv rv-r" style="transition-delay:.15s"><h4>Vision</h4><p>A future where AI accelerates how software is built, and the infrastructure beneath it is secure, observable and resilient by default.</p></div>
+      </div>
+      <div class="jump rv">
+        <a href="#experience">Experience</a><a href="#education">Education</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#certifications">Certifications</a>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- EXPERIENCE -->
+<section id="experience"><div class="wrap">
+  <span class="eyebrow rv">02 — Experience</span><h2 class="sec rv">Where I've done the work</h2>
+  <p class="sec-sub rv">Production platforms, incident response and the automation that keeps both manageable.</p>
+
+  <div class="card exp rv-l" style="margin-bottom:22px">
+    <div class="exp-side"><span class="badge">Full-time</span><div class="dur">Aug 2021 – Aug 2023</div><div class="loc">Chennai, India</div></div>
+    <div class="exp-main">
+      <h3>Software Engineer — DevOps / L2 Product Support</h3><div class="co">LTIMindtree</div>
+      <div class="lbl">Key responsibilities</div>
+      <ul class="clean">
+        <li>Operated 10+ microservices on AWS EKS with Docker and Helm — tuning resource quotas, governing pod lifecycle and preventing resource-contention failures.</li>
+        <li>Provisioned AWS infrastructure and EKS clusters as code using Terraform and Ansible across Dev, UAT and Prod.</li>
+        <li>Built and maintained Jenkins and GitHub Actions CI/CD pipelines with deployment gates and automated rollback for 5+ teams.</li>
+        <li>Led P1–P3 incident response and root-cause analysis using Datadog, Prometheus, Grafana and Splunk, authoring runbooks for critical services.</li>
+      </ul>
+      <div class="lbl">Key achievements</div>
+      <ul class="clean win">
+        <li>Sustained <b>99%+ deployment success</b> across two consecutive quarters and cut mean time to resolution by <b>~60%</b> — recognised with the A-TEAM and MASTERMIND awards.</li>
+        <li>Automated <b>15+</b> health-check and operational routines, eliminating <b>~20 hours/week</b> of manual effort and reducing configuration drift to near-zero.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card exp rv-r">
+    <div class="exp-side"><span class="badge">Full-time</span><div class="dur">Feb 2025 – Apr 2026</div><div class="loc">London, UK</div></div>
+    <div class="exp-main">
+      <h3>Recreation Assistant — Risk &amp; Compliance</h3><div class="co">Lampton Leisure · Hounslow Council</div>
+      <div class="lbl">Key responsibilities</div>
+      <ul class="clean">
+        <li>Acted as a front-line risk owner, ensuring adherence to defined safety and regulatory standards.</li>
+        <li>Conducted structured inspections and audits, detecting and reporting faults early.</li>
+        <li>Managed incident escalation workflows in a high-footfall, multi-stakeholder environment.</li>
+        <li>Maintained governance and audit documentation using Power BI and Microsoft 365.</li>
+      </ul>
+      <div class="lbl">Key achievements</div>
+      <ul class="clean win">
+        <li>Maintained regulatory compliance across a public-sector facility, <b>reducing operational disruption</b> through early fault detection.</li>
+        <li>Produced <b>audit-ready reporting</b> evidencing standards adherence for internal and external review.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- EDUCATION -->
+<section id="education"><div class="wrap">
+  <span class="eyebrow rv">03 — Education</span><h2 class="sec rv">Foundations</h2>
+  <div class="two">
+    <div class="card edu rv-l">
+      <h3>MSc Information Security</h3><div class="inst">Royal Holloway, University of London</div>
+      <div class="meta">Sep 2023 – Dec 2024 · Full-time · Grade 2:1 · NCSC-certified</div>
+      <ul class="clean">
+        <li>Thesis: analysed APT campaigns in the financial sector (Lazarus, FIN7, Cobalt) using MITRE ATT&amp;CK, producing attack-flow maps and mitigation playbooks.</li>
+        <li>Specialised in secure systems, threat modelling, network security and security management aligned to ISO/IEC 27001.</li>
+        <li>One of the UK's NCSC-recognised information-security master's programmes.</li>
+      </ul>
+    </div>
+    <div class="card edu rv-r">
+      <h3>BE Computer Science Engineering</h3><div class="inst">St. Joseph's Institute of Technology · Anna University</div>
+      <div class="meta">Aug 2017 – Apr 2021 · Full-time · Grade 2:1</div>
+      <ul class="clean">
+        <li>Core computer-science foundations: operating systems, networks, databases and distributed systems.</li>
+        <li>Full-stack and systems programming across Java, Python and C.</li>
+        <li>Final-year work in applied computer vision and embedded prototyping.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- PROJECTS -->
+<section id="projects"><div class="wrap">
+  <span class="eyebrow rv">04 — Projects</span><h2 class="sec rv">Things I've built</h2>
+  <p class="sec-sub rv">Pipelines, assessments and automation — each one shipped to solve a real operational problem.</p>
+
+  <div class="card proj rv-l">
+    <div class="proj-side"><div class="n">01</div><div class="t">DevSecOps<br>Platform Engineering<br><br>2024–2025</div></div>
+    <div class="proj-main">
+      <h3>Secure CI/CD &amp; GitOps Delivery Pipeline</h3>
+      <p class="desc">A security-hardened, GitOps-driven delivery pipeline that blocks unsafe code before it reaches an environment. Security scanning runs as a mandatory merge gate, and Kubernetes releases stay rollback-ready with full audit trails.</p>
+      <div class="out">
+        <div>Vulnerable images reaching staging reduced to <b>zero</b></div>
+        <div>Deployment lead time cut by <b>40%</b></div>
+        <div>Manual pre-deploy security review <b>eliminated</b></div>
+        <div>Auditable, health-check-triggered <b>auto-rollback</b></div>
+      </div>
+      <div class="pills"><span class="pill">GitHub Actions</span><span class="pill">Argo CD</span><span class="pill">Helm</span><span class="pill">Terraform</span><span class="pill">Kubernetes (EKS)</span><span class="pill">Trivy</span><span class="pill">Checkov</span><span class="pill">Docker</span></div>
+    </div>
+  </div>
+
+  <div class="card proj rv-r">
+    <div class="proj-side"><div class="n">02</div><div class="t">Application Security<br>Secure SDLC<br><br>2024</div></div>
+    <div class="proj-main">
+      <h3>Payment Gateway Threat Modelling &amp; Vulnerability Assessment</h3>
+      <p class="desc">A shift-left security assessment of a payment gateway before deployment — mapping trust boundaries and data flows to find weaknesses while they were still cheap to fix.</p>
+      <div class="out">
+        <div><b>12+ vulnerabilities</b> identified across auth and data-transit boundaries</div>
+        <div>Findings mapped to <b>MITRE ATT&amp;CK</b> techniques</div>
+        <div>Remediation tickets <b>validated before release</b></div>
+        <div>Misconfigurations resolved across <b>3 integration points</b></div>
+      </div>
+      <div class="pills"><span class="pill">STRIDE</span><span class="pill">OWASP Threat Dragon</span><span class="pill">MITRE ATT&amp;CK</span><span class="pill">Secure SDLC</span></div>
+    </div>
+  </div>
+
+  <div class="card proj rv-l">
+    <div class="proj-side"><div class="n">03</div><div class="t">SRE<br>Reliability Automation<br><br>2022–2023</div></div>
+    <div class="proj-main">
+      <h3>Automated Incident Detection &amp; RCA Framework</h3>
+      <p class="desc">An automated triage framework that turns an alert into a structured root-cause report before an engineer even opens a terminal, correlating signals across services to surface cascading failures.</p>
+      <div class="out">
+        <div>Structured RCA reports within <b>2 minutes</b> of an alert</div>
+        <div><b>~45 minutes</b> of manual log collection removed per P1</div>
+        <div>Mean time to detection reduced by <b>40%</b></div>
+        <div>Root causes surfaced <b>before first escalation</b></div>
+      </div>
+      <div class="pills"><span class="pill">Python</span><span class="pill">Bash</span><span class="pill">Datadog</span><span class="pill">Prometheus</span><span class="pill">Kubernetes</span><span class="pill">Grafana</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- SKILLS -->
+<section id="skills"><div class="wrap">
+  <span class="eyebrow rv">05 — Skills</span><h2 class="sec rv">The toolkit</h2>
+  <p class="sec-sub rv">What I reach for day to day, grouped by where it sits in the stack.</p>
+  <div class="skills" id="skillGrid"></div>
+</div></section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications"><div class="wrap">
+  <span class="eyebrow rv">06 — Certifications</span><h2 class="sec rv">Credentials</h2>
+  <div class="certs" id="certGrid"></div>
+</div></section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements"><div class="wrap">
+  <span class="eyebrow rv">07 — Recognition</span><h2 class="sec rv">Achievements &amp; Recognition</h2>
+  <p class="sec-sub rv">Recognition earned for automation, reliability and secure delivery in production environments.</p>
+  <div class="stats">
+    <div class="card stat rv"><div class="num" data-c="3" data-s="+">0</div><div class="lab">Years Experience</div></div>
+    <div class="card stat rv"><div class="num" data-c="6" data-s="+">0</div><div class="lab">Certifications</div></div>
+    <div class="card stat rv"><div class="num" data-c="3" data-s="">0</div><div class="lab">Projects</div></div>
+    <div class="card stat rv"><div class="num" data-c="2" data-s="">0</div><div class="lab">Awards</div></div>
+  </div>
+  <div class="two">
+    <div class="card ach rv-l">
+      <!-- AWARD IMAGE: to use one, add class "has-img" to the .card above,
+           uncomment the <img> line, and delete the .ach-ic span below. -->
+      <!-- <img class="ach-img" src="images/mastermind.jpg" alt="MASTERMIND Award" loading="lazy"> -->
+      <div class="ach-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0012 0V2z"/></svg></div>
+      <div><span class="badge">Professional · 2023</span><h3>MASTERMIND Award</h3><div class="inst">LTIMindtree</div><p>Awarded for automation work and priority-incident resolution — automating 15+ operational routines and driving a significant reduction in incident response time across production platforms.</p></div>
+    </div>
+    <div class="card ach rv-r">
+      <!-- <img class="ach-img" src="images/ateam.jpg" alt="A-TEAM Award" loading="lazy"> -->
+      <div class="ach-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+      <div><span class="badge">Professional · 2022</span><h3>A-TEAM Award</h3><div class="inst">LTIMindtree</div><p>Awarded for fine-tuning automation tooling and sustaining operational success rates above 99% — including a promotion validation tool maintained at 99%+ reliability.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- CONTACT -->
+<section id="contact"><div class="wrap">
+  <span class="eyebrow rv">08 — Contact</span><h2 class="sec rv">Let's build something reliable</h2>
+  <p class="sec-sub rv">Open to DevOps, DevSecOps, SRE and platform roles — in Chennai, remote, or relocating.</p>
+  <div class="contact-grid">
+    <form class="card form rv-l" id="cform">
+      <div class="fg"><input type="text" id="n" required><label for="n">Full name</label><span class="bar"></span></div>
+      <div class="fg"><input type="email" id="e" required><label for="e">Email address</label><span class="bar"></span></div>
+      <div class="fg"><input type="text" id="s" required><label for="s">Subject</label><span class="bar"></span></div>
+      <div class="fg"><textarea id="m" required></textarea><label for="m">Message</label><span class="bar"></span></div>
+      <button type="submit" class="send">Send message</button>
+    </form>
+    <div class="card info rv-r">
+      <a class="info-row" href="mailto:mothishbk2000@gmail.com">
+        <span class="ir-ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+        <span><span class="ir-l">Email</span><br><span class="ir-v">mothishbk2000@gmail.com</span></span></a>
+      <a class="info-row" href="https://linkedin.com/in/mothish-babukandaswamy" target="_blank" rel="noopener">
+        <span class="ir-ic"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></span>
+        <span><span class="ir-l">LinkedIn</span><br><span class="ir-v">in/mothish-babukandaswamy</span></span></a>
+      <a class="info-row" href="https://github.com/mothishbk" target="_blank" rel="noopener">
+        <span class="ir-ic"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span>
+        <span><span class="ir-l">GitHub</span><br><span class="ir-v">github.com/mothishbk</span></span></a>
+      <div class="info-row" style="cursor:default">
+        <span class="ir-ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <span><span class="ir-l">Location</span><br><span class="ir-v">Chennai, India · Open to relocation</span></span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fn">MOTHISH BABU KANDASWAMY</div>
+  <div class="tag">Cloud reliability, with security built in.</div>
+  <div class="socials">
+    <a class="soc" href="https://github.com/mothishbk" target="_blank" rel="noopener" aria-label="GitHub"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+    <a class="soc" href="https://linkedin.com/in/mothish-babukandaswamy" target="_blank" rel="noopener" aria-label="LinkedIn"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+    <a class="soc" href="mailto:mothishbk2000@gmail.com" aria-label="Email"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+  </div>
+  <div class="copy">© <span id="yr"></span> · Built and deployed by hand.</div>
+</div></footer>
+
+<script>
+const ICON={cloud:'<path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/>',box:'<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>',flow:'<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/>',eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',code:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',cpu:'<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>'};
+const SKILLS=[
+ ['Cloud & Infrastructure','cloud',['AWS (EC2, EKS, S3)','IAM','VPC','ALB','CloudWatch','ECR','Microsoft Azure','Linux / Unix Admin','High Availability','Multi-Cloud']],
+ ['Containers & Orchestration','box',['Kubernetes (EKS)','Docker','Docker Compose','Helm','Argo CD (GitOps)','Pod Lifecycle','Resource Quotas']],
+ ['CI/CD & Infrastructure as Code','flow',['GitHub Actions','GitLab CI','Jenkins','Terraform','Ansible','Maven','Automated Rollback','Configuration Management']],
+ ['Observability & Reliability','eye',['Datadog','Prometheus','Grafana','Splunk','New Relic','CloudWatch','SLI / SLO','Incident Response (P1–P3)','RCA','Runbooks']],
+ ['Security & DevSecOps','shield',['SAST / DAST','Trivy','Checkov','OWASP ZAP','Burp Suite','STRIDE','MITRE ATT&CK','Shift-Left / Secure SDLC','IAM Least-Privilege','ISO/IEC 27001']],
+ ['Programming & Data','code',['Python (Flask, Pandas)','Bash / Shell','Java (Spring Boot)','Node.js','SQL / MySQL / Oracle','REST APIs','YAML','Kafka']],
+ ['AI Security & Governance','cpu',['AI / MLOps Security','LLM Security','Federated Learning (concepts)','Differential Privacy','GDPR','DPDP Act awareness']]
+];
+document.getElementById('skillGrid').innerHTML=SKILLS.map(([t,i,p])=>
+`<div class="card sk rv"><div class="sk-h"><span class="sk-ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">${ICON[i]}</svg></span><h3>${t}</h3></div><div class="pills">${p.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div>`).join('');
+
+/* ─────────────────────────────────────────────────────────────
+   CERTIFICATIONS  ·  [ name, issuer, icon, chip, status, image, verifyURL ]
+   • image  : "" shows the SVG icon.  "images/az900.jpg" shows the scan.
+   • verify : "" hides the button.    Any URL adds a "Verify" link.
+   Add either, both, or neither — each card falls back safely.
+   ───────────────────────────────────────────────────────────── */
+const CERTS=[
+ ['Certified AI Security & Risk','Red Team Leaders','cpu','p','Certified','',''],
+ ['Microsoft Azure Fundamentals (AZ-900)','Microsoft','cloud','p','Certified','',''],
+ ['DevSecOps','TryHackMe','shield','p','Certified','',''],
+ ['Datadog Fundamentals','Datadog','eye','p','Certified','',''],
+ ['Agile Scrum Master','HRD University','flow','p','Certified','',''],
+ ['DPDP Act','Data Protection · India','shield','a','In Progress','','']
+];
+const VIC='<svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+document.getElementById('certGrid').innerHTML=CERTS.map(([n,i,ic,c,s,img,url])=>{
+  const media = img
+    ? `<img class="cert-img" src="${img}" alt="${n} certificate" loading="lazy">`
+    : `<span class="cert-ic"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">${ICON[ic]}</svg></span>`;
+  const verify = url ? `<a class="verify" href="${url}" target="_blank" rel="noopener">${VIC} Verify</a>` : '';
+  const body = `<div><h3>${n}</h3><div class="iss">${i}</div><span class="chip ${c}">${s}</span>${verify}</div>`;
+  return `<div class="card cert rv${img?' has-img':''}">${img?body+media:media+body}</div>`;
+}).join('');
+
+document.getElementById('yr').textContent=new Date().getFullYear();
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -40px'});
+const mount=()=>document.querySelectorAll('.rv,.rv-l,.rv-r').forEach((el,i)=>{if(!el.style.transitionDelay)el.style.transitionDelay=(i%5)*.07+'s';io.observe(el)});
+mount();
+
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.num').forEach(n=>{const t=+n.dataset.c,s=n.dataset.s;let c=0;const iv=setInterval(()=>{c++;n.textContent=c+s;if(c>=t)clearInterval(iv)},260)});so.unobserve(e.target)}}),{threshold:.4});
+const st=document.querySelector('.stats');if(st)so.observe(st);
+
+document.getElementById('cform').addEventListener('submit',ev=>{
+  ev.preventDefault();
+  const g=id=>encodeURIComponent(document.getElementById(id).value);
+  location.href=`mailto:mothishbk2000@gmail.com?subject=${g('s')}&body=${encodeURIComponent('From: '+document.getElementById('n').value+' <'+document.getElementById('e').value+'>\n\n')}${g('m')}`;
+});
+</script>
+</body>
+</html>
